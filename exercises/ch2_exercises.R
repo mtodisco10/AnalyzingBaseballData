@@ -69,3 +69,28 @@ subset(so.bb, so.bb.ratio > 2.8)
 #4e)
 so.bb[order(bb),]
 #The pitcher with the highest walks (Roger Clemens) also had a high so / bb rat at 2.95
+
+##### 5 Pitcher Strikeout/Walk Rates #####
+#5a)
+Pitching <- read.csv('DataFiles/lahman/core/pitching.csv')
+
+#5b)
+stats <- function(d){
+  c.SO <- sum(d$SO, na.rm = TRUE)
+  c.BB <- sum(d$BB, na.rm = TRUE)
+  c.IPouts <- sum(d$IPouts, na.rm = TRUE)
+  c.midYear <- median(d$yearID, na.rm = TRUE)
+  data.frame(SO=c.SO, BB=c.BB, IPouts = c.IPouts, midYear = c.midYear)
+}
+library(plyr)
+career.pitching <- ddply(Pitching, .(playerID), stats)
+
+#5c)
+merged <- merge(Pitching, career.pitching, by="playerID")
+
+#5d)
+career.1000 <- subset(career.pitching, IPouts >= 10000)
+
+#5e)
+with(career.1000, plot(midYear, (SO/BB)))
+#SO/BB ratio appears to be trending upward since the 1940's
