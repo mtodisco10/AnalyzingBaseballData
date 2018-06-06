@@ -51,4 +51,61 @@ hof.pitching.recent <- hof.pitching.recent[order(hof.pitching.recent$WAR.Season)
 #4b)
 dotchart(as.numeric(hof.pitching.recent$WAR.Season), labels=hof.pitching.recent$X, xlab='WAR per Season')
 
+#4c)
+#Tom Seaver and Bob Gibson stand out as the two best pitchers since 1960 in regards to WAR per Season
 
+##### 5 Hall of Fame Pitching Dataset Continued...
+#5a)
+with(hof.pitching, plot(MidYear, WAR.Season))
+
+#5b)
+#There is a negative trend
+
+#5c)
+with(hof.pitching, plot(MidYear, WAR.Season))
+with(hof.pitching, identify(MidYear, WAR.Season, X, n=2))
+#Hank O'Day & Monte Ford
+
+##### 6 Working with the Lahman Batting Dataset
+
+#6a)
+batting <- read.csv('DataFiles/lahman/core/batting.csv')
+master <- read.csv('https://raw.githubusercontent.com/dgrtwo/dgrtwo.github.com/master/pages/lahman/Master.csv')
+
+#6b)
+getinfo <- function(firstname, lastname){
+  playerline <- subset(master,
+                       nameFirst==firstname & nameLast==lastname)
+  name.code <- as.character(playerline$playerID)
+  birthyear <- playerline$birthYear
+  birthmonth <- playerline$birthMonth
+  byear <- ifelse(birthmonth <= 6, birthyear, birthyear + 1)
+  list(name.code=name.code, byear=byear)
+}
+
+ty.cobb <- getinfo('Ty', 'Cobb')
+ted.williams <- getinfo('Ted','Williams')
+pete.rose <- getinfo('Pete','Rose')
+pete.rose$name.code <- pete.rose$name.code[-2]
+pete.rose$byear <- pete.rose$byear[-2]
+
+cobb.data <- subset(batting, playerID == ty.cobb$name.code)
+williams.data <- subset(batting, playerID == ted.williams$name.code)
+rose.data <- subset(batting, playerID == pete.rose$name.code)
+
+#6c)
+cobb.data$Age <- cobb.data$yearID - ty.cobb$byear
+williams.data$Age <- williams.data$yearID - ted.williams$byear
+rose.data$Age <- rose.data$yearID - pete.rose$byear
+
+#6d)
+with(rose.data, plot(Age, cumsum(H), type='l', lty=3, lwd =2,
+                     xlab = 'Age', ylab='Hits',
+                     xlim = c(15,50), ylim = c(0, 5000)))
+
+#6e)
+with(cobb.data, lines(Age, cumsum(H), lty=2, lwd=2))
+with(williams.data, lines(Age, cumsum(H), lty=1, lwd=2))
+
+#6f)
+#Rose had the steadiest hitting trend over his career.  Williams got off to a very fast start in his early 20's and then his hit total stopped growing for a few years because of his time in the service.  Cobb had a similar trajectory as Rose, but fell just a little short in his total career hits.
