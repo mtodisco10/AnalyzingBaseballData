@@ -109,3 +109,11 @@ with(williams.data, lines(Age, cumsum(H), lty=1, lwd=2))
 
 #6f)
 #Rose had the steadiest hitting trend over his career.  Williams got off to a very fast start in his early 20's and then his hit total stopped growing for a few years because of his time in the service.  Cobb had a similar trajectory as Rose, but fell just a little short in his total career hits.
+
+##### Working with Retrosheet Play-by-Play Dataset
+#7a)
+data1998 <- read.csv('DataFiles/retrosheets/events/all1998.csv')
+fields <- read.csv('DataFiles/retrosheets/events/fields.csv')
+names(data1998) <- names(fields)
+
+
