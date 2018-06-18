@@ -115,5 +115,8 @@ with(williams.data, lines(Age, cumsum(H), lty=1, lwd=2))
 data1998 <- read.csv('DataFiles/retrosheets/events/all1998.csv')
 fields <- read.csv('DataFiles/retrosheets/events/fields.csv')
 names(data1998) <- names(fields)
+id.codes <- read.csv('DataFiles/retrosheets/ID_codes.csv', header=TRUE)
+park.codes <- read.csv('DataFiles/retrosheets/Park_codes.csv', header=TRUE)
+team.names <- read.csv('DataFiles/retrosheets/team_nicknames.csv', header = TRUE)
 
 
