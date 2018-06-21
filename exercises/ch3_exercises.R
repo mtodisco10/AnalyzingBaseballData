@@ -116,7 +116,32 @@ data1998 <- read.csv('DataFiles/retrosheets/events/all1998.csv')
 fields <- read.csv('DataFiles/retrosheets/events/fields.csv')
 names(data1998) <- names(fields)
 id.codes <- read.csv('DataFiles/retrosheets/ID_codes.csv', header=TRUE)
-park.codes <- read.csv('DataFiles/retrosheets/Park_codes.csv', header=TRUE)
-team.names <- read.csv('DataFiles/retrosheets/team_nicknames.csv', header = TRUE)
 
+mac.id <- as.character(subset(id.codes, Last == 'McGwire' & First == 'Mark')$ID)
+sosa.id <- as.character(subset(id.codes, Last == 'Sosa' & First == 'Sammy')$ID)
 
+mac.data <- subset(data1998, batter == mac.id)
+sosa.data <- subset(data1998, batter == sosa.id)
+
+#7b)
+mac.data  <- subset(mac.data, batter_event_flag == TRUE)
+sosa.data <- subset(sosa.data, batter_event_flag == TRUE)
+
+#7c)
+mac.data$PA <- 1:nrow(mac.data)
+sosa.data$PA <- 1:nrow(sosa.data)
+
+#7d)
+mac.HR.PA <- mac.data$PA[mac.data$event_type == 23]
+sosa.HR.PA <- sosa.data$PA[sosa.data$event_type == 23]
+
+#7e)
+mac.spacing <- diff(c(0, mac.HR.PA))
+sosa.spacing <- diff(c(0, sosa.HR.PA))
+
+#f)
+summary(mac.spacing)
+summary(sosa.spacing)
+
+hist(mac.spacing)
+hist(sosa.spacing)
