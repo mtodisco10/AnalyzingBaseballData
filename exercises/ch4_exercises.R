@@ -45,3 +45,4 @@ head(teams.2015.merged[order(-teams.2015.merged$PyResiduals), ]$playerID, 10)
 
 #4 Pythagorean Relationship for Other Sports
 #opensourcesports.com
+#Maybe get to it later
