@@ -40,7 +40,6 @@ cabrera_hit$distance <- sqrt(with(cabrera_hit, hitx ** 2 + hity ** 2))
 
 #4c)
 cabrera_hit$gameDay <- as.integer((format(cabrera_hit$gamedate, format="%j")))
-head(cabrera_hit)
 
 #4d)
 
